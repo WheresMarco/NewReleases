@@ -10,33 +10,35 @@ var config = require('./config');
   * @param string artist
   * @return int artist_id
   */
-function getArtistID(artist, callback) {
-  var options = {
-    hostname: 'api.musixmatch.com',
-    port: 80,
-    path: '/ws/1.1/artist.search?q_artist=' + artist + '&page_size=1&apikey=' + config.musixmatchAPI,
-    method: 'GET'
-  };
+function getArtistID(artist) {
+  return new Promise(function(resolve) {
+    var options = {
+      hostname: 'api.musixmatch.com',
+      port: 80,
+      path: '/ws/1.1/artist.search?q_artist=' + artist + '&page_size=1&apikey=' + config.musixmatchAPI,
+      method: 'GET'
+    };
 
-  var request = http.request(options, (result) => {
-    result.setEncoding('utf8');
+    var request = http.request(options, (result) => {
+      result.setEncoding('utf8');
 
-    var body = "";
+      var body = "";
 
-    result.on('data', (chunk) => {
-      body += chunk;
+      result.on('data', (chunk) => {
+        body += chunk;
+      });
+
+      result.on('end', () => {
+        resolve(JSON.parse(body));
+      });
     });
 
-    result.on('end', () => {
-      callback(null, JSON.parse(body));
+    request.on('error', (error) => {
+      throw error;
     });
-  });
 
-  request.on('error', (error) => {
-    console.log(`problem with request: ${error.message}`);
+    request.end();
   });
-
-  request.end();
 }
 
 /**
@@ -45,33 +47,35 @@ function getArtistID(artist, callback) {
   * @param int artistID
   * @return array
   */
-function getAlbums(artistID, callback) {
-  var options = {
-    hostname: 'api.musixmatch.com',
-    port: 80,
-    path: '/ws/1.1/artist.albums.get?artist_id=' + artistID + '&s_release_date=desc&g_album_name=1&apikey=' + config.musixmatchAPI,
-    method: 'GET'
-  };
+function getAlbums(artistID) {
+  return new Promise(function(resolve) {
+    var options = {
+      hostname: 'api.musixmatch.com',
+      port: 80,
+      path: '/ws/1.1/artist.albums.get?artist_id=' + artistID + '&s_release_date=desc&g_album_name=1&apikey=' + config.musixmatchAPI,
+      method: 'GET'
+    };
 
-  var request = http.request(options, (result) => {
-    result.setEncoding('utf8');
+    var request = http.request(options, (result) => {
+      result.setEncoding('utf8');
 
-    var body = "";
+      var body = "";
 
-    result.on('data', (chunk) => {
-      body += chunk;
+      result.on('data', (chunk) => {
+        body += chunk;
+      });
+
+      result.on('end', () => {
+        resolve(JSON.parse(body));
+      });
     });
 
-    result.on('end', () => {
-      callback(null, JSON.parse(body));
+    request.on('error', (error) => {
+      throw error;
     });
-  });
 
-  request.on('error', (error) => {
-    console.log(`problem with request: ${error.message}`);
+    request.end();
   });
-
-  request.end();
 }
 
 // Functions that are available for outside file use
