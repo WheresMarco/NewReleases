@@ -1,5 +1,5 @@
 "use strict";
 
-var Albums = require("./Albums.js");
+var Albums = require("./Albums");
 
 Albums.getAlbums();
