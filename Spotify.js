@@ -18,7 +18,7 @@ var spotifyApi = new SpotifyWebApi({
   */
 function getUserAuth() {
   return new Promise(function(resolve) {
-    var scopes = ['user-follow-read'];
+    var scopes = ['user-follow-read', 'user-read-email'];
     var state = 'some-state-of-my-choice';
 
     // Create the authorization URL
@@ -56,6 +56,8 @@ function getUserAccessToken(code) {
   */
 function getFollowedArtists() {
   return new Promise(function(resolve) {
+    // TODO Loop through the result for multiple pages
+
     spotifyApi.getFollowedArtists()
       .then(function(data) {
         resolve(data.body);
@@ -75,7 +77,7 @@ function getUsersArtists() {
     getUserAuth()
       // 1. Get user auth
       .then(function(data) {
-        return getUserAccessToken(data.code);
+        return getUserAccessToken("");
       })
       // 2. Get user accessToken
       .then(function(data) {
