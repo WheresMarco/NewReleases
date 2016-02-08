@@ -1,7 +1,7 @@
 {
   "name": "newreleases",
   "version": "1.0.0",
-  "description": "A newsletter for new releases by artsits you follow on Spotify.",
+  "description": "A newsletter for new releases by artists you follow on Spotify.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
