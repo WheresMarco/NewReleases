@@ -16,7 +16,8 @@
     "url": "https://github.com/WheresMarco/NewReleases/issues"
   },
   "homepage": "https://github.com/WheresMarco/NewReleases#readme",
-  "devDependencies": {
-    "spotify-web-api-node": "^2.2.0"
+  "dependencies": {
+    "spotify-web-api-node": "^2.2.0",
+    "firebase": "^2.4.0"
   }
 }
