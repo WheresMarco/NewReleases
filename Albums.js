@@ -1,12 +1,16 @@
 "use strict";
 
+// Get the requires in order
 var http = require("http");
 var config = require('./config');
 
-function getArtistID(callback) {
-  // TEMP ARTIST
-  var artist = "hellogoodbye";
-
+/**
+  * Get an artist_id that can be used with getAlbums()
+  *
+  * @param string artist
+  * @return int artist_id
+  */
+function getArtistID(artist, callback) {
   var options = {
     hostname: 'api.musixmatch.com',
     port: 80,
@@ -17,14 +21,14 @@ function getArtistID(callback) {
   var request = http.request(options, (result) => {
     result.setEncoding('utf8');
 
-    var resultData = "";
+    var body = "";
 
     result.on('data', (chunk) => {
-      resultData += chunk;
+      body += chunk;
     });
 
     result.on('end', () => {
-      console.log(resultData);
+      callback(null, JSON.parse(body));
     });
   });
 
@@ -35,25 +39,31 @@ function getArtistID(callback) {
   request.end();
 }
 
-function getAlbums(callback) {
+/**
+  * Get albums that an artist have made.
+  *
+  * @param int artistID
+  * @return array
+  */
+function getAlbums(artistID, callback) {
   var options = {
     hostname: 'api.musixmatch.com',
     port: 80,
-    path: '/ws/1.1/artist.albums.get?artist_id=1039&s_release_date=desc&g_album_name=1&apikey=' + config.musixmatchAPI,
+    path: '/ws/1.1/artist.albums.get?artist_id=' + artistID + '&s_release_date=desc&g_album_name=1&apikey=' + config.musixmatchAPI,
     method: 'GET'
   };
 
   var request = http.request(options, (result) => {
     result.setEncoding('utf8');
 
-    var resultData = "";
+    var body = "";
 
     result.on('data', (chunk) => {
-      resultData += chunk;
+      body += chunk;
     });
 
     result.on('end', () => {
-      console.log(resultData);
+      callback(null, JSON.parse(body));
     });
   });
 
@@ -64,5 +74,6 @@ function getAlbums(callback) {
   request.end();
 }
 
+// Functions that are available for outside file use
 module.exports.getAlbums = getAlbums;
 module.exports.getArtistID = getArtistID;
