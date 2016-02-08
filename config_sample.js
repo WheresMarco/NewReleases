@@ -1,6 +1,8 @@
 var config = {};
 
 config.musixmatchAPI = "";
-config.spotifyClientSecret = ""; // base64 encoded "client_id:client_secret"
+config.spotifyClientID = "";
+config.spotifyClientSecret = "";
+config.redirectUri = "http://localhost";
 
 module.exports = config;

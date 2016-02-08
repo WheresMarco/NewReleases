@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/WheresMarco/NewReleases/issues"
   },
-  "homepage": "https://github.com/WheresMarco/NewReleases#readme"
+  "homepage": "https://github.com/WheresMarco/NewReleases#readme",
+  "devDependencies": {
+    "spotify-web-api-node": "^2.2.0"
+  }
 }
